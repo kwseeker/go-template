@@ -46,9 +46,7 @@ func main() {
 		logLevel = logger.LogLevel(logLevelParam)
 	}
 
-	//dsn := "root:123456@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Local"
-	//dsn := "root:Fb8K#M5sP5BDmUnu@tcp(192.168.0.47:3306)/wedding?charset=utf8mb4&parseTime=True&loc=Local"
-	dsn := "wedding:5f42985dfe9efaee@tcp(192.168.1.168:3306)/wedding?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:123456@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logLevel),
 	})
