@@ -11,7 +11,7 @@ import (
 )
 
 const TableName = "ring_box"
-const Batch = 1000
+const Batch = 10000
 
 type void struct{}
 
@@ -85,6 +85,7 @@ func main() {
 	for ptr <= maxUserId {
 		log.Println("handle: user_id: ", ptr, ptr+uint64(Batch))
 		db.Where("user_id >= ? and user_id < ?", ptr, ptr+uint64(Batch)).Find(&rings)
+		ptr += uint64(Batch)
 		if len(rings) == 0 {
 			continue
 		}
@@ -104,18 +105,25 @@ func main() {
 					log.Println(">>>>>>> repairing ...")
 					db.Model(&ring).Debug().Updates(RingBox{UserId: ring.BindLoverId, BindLoverId: ring.UserId})
 				} else {
-					log.Println(">>>>>>> lover has this item, skip ...")
+					if ring.State == 1 {
+						log.Println(">>>>>>> lover has this item, not use, delete")
+						db.Debug().Delete(&RingBox{}, ring.Id)
+					} else {
+						log.Println(">>>>>>> lover has this item, on use, skip")
+					}
 				}
 			} else {
 				log.Println("+++++++ ", key)
+				if ring.State == 1 {
+					log.Println("+++++++ delete")
+					db.Debug().Delete(&RingBox{}, ring.Id)
+				}
 			}
 		}
 
 		for k := range exceptSet {
 			delete(exceptSet, k)
 		}
-
-		ptr += uint64(Batch)
 	}
 
 	log.Println("Done!")
