@@ -51,7 +51,9 @@ type canceler interface {
 
 + **cancelCtx** 用于cancel协程
 
-  父Context关闭会逐层关闭所有子Context。
+  内部还是通过`channel+select`实现的：cancel() 关闭 Done()返回的 channel, go 协程检测到channel 关闭后，退出协程。
+
+  通过遍历多叉树父Context cancel 会逐层调用 cancel() 关闭所有子Context。
 
   ```go
   type cancelCtx struct {
