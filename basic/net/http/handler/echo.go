@@ -9,7 +9,7 @@ import (
 
 type Echo struct{}
 
-//类似类的静态方法
+// 类似类的静态方法
 func (h Echo) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.RemoteAddr, "inside echo handler, request detail: ")
 	// 请求方式：GET POST DELETE PUT UPDATE

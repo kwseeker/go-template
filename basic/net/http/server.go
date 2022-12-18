@@ -3,7 +3,7 @@ package http
 import (
 	"encoding/json"
 	"io/ioutil"
-	handler2 "kwseeker.top/kwseeker/go-template/http/handler"
+	handler2 "kwseeker.top/kwseeker/go-template/basic/net/http/handler"
 	"log"
 	"net/http"
 )
