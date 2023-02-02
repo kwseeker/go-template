@@ -1,13 +1,19 @@
 module kwseeker.top/kwseeker/go-template
 
-go 1.17
+go 1.18
 
 require (
 	github.com/sirupsen/logrus v1.8.1
+	github.com/stretchr/testify v1.2.2
 	golang.org/x/net v0.0.0-20220930213112-107f3e3c3b0b
 	golang.org/x/sync v0.1.0
 	gorm.io/driver/mysql v1.3.6
 	gorm.io/gorm v1.23.8
+)
+
+require (
+	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 )
 
 require (
