@@ -10,6 +10,13 @@ require (
 )
 
 require (
+	github.com/gorilla/mux v1.8.0 // indirect
+	github.com/inconshreveable/mousetrap v1.0.1 // indirect
+	github.com/spf13/cobra v1.6.1 // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
+)
+
+require (
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.0
 	github.com/jinzhu/inflection v1.0.0 // indirect

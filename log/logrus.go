@@ -3,7 +3,7 @@ package log
 import (
 	log "github.com/sirupsen/logrus"
 	"io"
-	file2 "kwseeker.top/kwseeker/go-template/file"
+	file2 "kwseeker.top/kwseeker/go-template/basic/os/file"
 	"os"
 )
 
@@ -11,9 +11,11 @@ type DefaultFieldHook struct {
 }
 
 // 这时实例化主类的方式，这里不适合
-//func New() *DefaultFieldHook {
-//	return &DefaultFieldHook{}
-//}
+//
+//	func New() *DefaultFieldHook {
+//		return &DefaultFieldHook{}
+//	}
+//
 // 实例化内部子类的方式
 func newDefaultFiledHook() *DefaultFieldHook {
 	return &DefaultFieldHook{}
