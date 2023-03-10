@@ -6,7 +6,22 @@ context 主要用来在 goroutine 之间传递上下文信息，包括：取消�
 
 在Go 里，我们不能直接杀死协程，协程的关闭一般会用 `channel+select` 方式来控制。但是在某些场景下，例如处理一个请求衍生了很多协程，这些协程之间是相互关联的：需要共享一些全局变量、有共同的 deadline 等，而且可以同时被关闭。再用 `channel+select` 就会比较麻烦，这时就可以通过 context 来实现。
 
+**常见的两种使用场景**：
 
++ **关闭钩子**（传递取消信号）
+
+  中间件以及web应用都有这种使用案例，流程：
+
+  1. 服务启动时创建跟上下文ctx，即context.Backgroud()，然后在任何需要监听 ctx.Done() 消息的逻辑块或协程中都传递ctx 并实现监听 ctx.Done() 消息的处理；
+  2. 主协程注册信号监听（如SIGINT SIGQUIT SIGTERM ），一旦有关闭信号就调用 cancel 函数，并将关闭消息传递给所有监听者（树一层一层地传递），执行各自的取消逻辑。
+
++ **共享变量**
+
+  数据通过 context 传递，感觉只是顺带实现的功能，因为context已经在程序中传的到处都是正好可以用于传递数据。
+
+  需要共享数据的地方调用context.WithValue() 返回ctx, 将ctx传递给需要读这个共量数据的地方通过ctx.Value("traceId")读取。
+
+  > 注意：context 只能读取父 context 共享的数据，不能读取子 context 共享的数据。
 
 ## context 原理
 
