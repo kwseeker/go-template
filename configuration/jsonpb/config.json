@@ -1,0 +1,11 @@
+{
+  "name":"Arvin",
+  "age": 18,
+  "contacts": [{
+    "type": 0,
+    "addr": "13711112222"
+  },{
+    "type": 1,
+    "addr": "xxx@gmail.com"
+  }]
+}

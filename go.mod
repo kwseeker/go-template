@@ -3,6 +3,7 @@ module kwseeker.top/kwseeker/go-template
 go 1.18
 
 require (
+	github.com/golang/protobuf v1.5.0
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.5.0
 	github.com/sirupsen/logrus v1.8.1
@@ -10,6 +11,7 @@ require (
 	github.com/stretchr/testify v1.2.2
 	golang.org/x/net v0.0.0-20220930213112-107f3e3c3b0b
 	golang.org/x/sync v0.1.0
+	google.golang.org/protobuf v1.31.0
 	gorm.io/driver/mysql v1.3.6
 	gorm.io/gorm v1.23.8
 )

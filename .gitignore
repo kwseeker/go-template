@@ -3,3 +3,5 @@
 **/*.profile
 **/*.prof
 **/*.out
+
+basic/net/socks
