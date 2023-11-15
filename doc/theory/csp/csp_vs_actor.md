@@ -34,7 +34,7 @@
 
 ## CSP
 
-![](../img/csp_model.png)
+![](../../img/csp_model.png)
 
 CSP： Communicating Sequential Process，通信顺序进程。
 
@@ -46,7 +46,7 @@ CSP是完全同步的，通道writer必须阻塞，直到通道reader读取为�
 
 Go 语言中用 goroutines 和 channels 实现CSP。
 
-CSP相对于共享内存的并发机制优点：
+**CSP相对于共享内存的并发机制优点**：
 
 对一个共享内存的对象，如果每个都要去修改的话，就必须得记得加锁和解锁，甚至更复杂的操作，而channel则是生产者和消费者，不需要关注锁和共享内存的复杂性（channel本身是线程安全的，内部有加锁），把共享内存看成一份输入和输出的数据。
 
@@ -92,7 +92,7 @@ func main() {
 
 ## Actor 
 
-![](../img/actor2_model.png)
+![](../../img/actor2_model.png)
 
 由Carl Hewitt于1973年提出，采用的是一切皆为演员的哲学。这类似于某些面向对象编程语言使用的一切都是对象哲学。
 

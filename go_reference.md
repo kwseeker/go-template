@@ -11,6 +11,7 @@
     + [topgoer](https://www.topgoer.com/)
     + Go语言高级编程
     + Go专家编程
+    + Go并发编程实战
   + 原理部分
     + Go语言设计与实现（Go源代码角度）
     + Go语言并发之道

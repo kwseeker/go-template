@@ -1,14 +1,16 @@
 module kwseeker.top/kwseeker/go-template
 
-go 1.18
+//go 1.18
+go 1.20
 
 require (
+	github.com/adrg/xdg v0.4.0
 	github.com/golang/protobuf v1.5.0
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.5.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.6.1
-	github.com/stretchr/testify v1.2.2
+	github.com/stretchr/testify v1.7.0
 	golang.org/x/net v0.0.0-20220930213112-107f3e3c3b0b
 	golang.org/x/sync v0.1.0
 	google.golang.org/protobuf v1.31.0

@@ -33,23 +33,3 @@ func TestWaitGroup(t *testing.T) {
 	// Wait for all HTTP fetches to complete.
 	wg.Wait()
 }
-
-func TestOnce(t *testing.T) {
-	//确保一个函数只执行一次
-	var once sync.Once
-	onceBody := func() {
-		t.Logf("Only once")
-	}
-	done := make(chan bool)
-	for i := 0; i < 10; i++ {
-		go func() {
-			once.Do(onceBody)
-			done <- true
-		}()
-	}
-	for i := 0; i < 10; i++ {
-		<-done
-	}
-	// Output:
-	// Only once
-}

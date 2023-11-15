@@ -2,7 +2,79 @@
 
 [Protocol Buffer Basics: Go](https://protobuf.dev/getting-started/gotutorial/)
 
+[proto3](https://protobuf.dev/programming-guides/proto3/)
+
+[proto2](https://protobuf.dev/programming-guides/proto2/)
+
 ## 编写 .proto
+
+### [定制 Options](https://protobuf.dev/programming-guides/proto2/#customoptions)
+
+这部分主要在 proto2 中讲解。
+
+其实是拓展官方的消息，因为选项是由Google/Protobuf/Deciptor.proto（例如FileOptions或FieldOptions）中定义的消息定义的。
+
+Protocol Buffers 中，选项（Options）是键值对（Key-Value）的形式存储的。
+
+当使用拓展选项时，选项名需要用圆括号括起来，以表明它是一个扩展，然后可以通过 Descriptor 读取选项的值。
+
+自定义选项可以被定义为proto中的任意类型，如string, int32, enum, 甚至message。
+
+案例：v2ray-core 中自定义 的选项：
+
+```protobuf
+extend google.protobuf.FieldOptions {
+  FieldOpt field_opt = 50000;
+}
+
+message FieldOpt{
+  repeated string any_wants = 1;
+  repeated string allowed_values = 2;
+  repeated string allowed_value_types = 3;
+
+  // convert_time_read_file_into read a file into another field, and clear this field during input parsing
+  string convert_time_read_file_into = 4;
+  // forbidden marks a boolean to be inaccessible to user
+  bool forbidden = 5;
+  // convert_time_resource_loading read a file, and place its resource hash into another field
+  string convert_time_resource_loading = 6;
+  // convert_time_parse_ip parse a string ip address, and put its binary representation into another field
+  string convert_time_parse_ip = 7;
+}
+
+message GeoIP {
+  string country_code = 1;
+  repeated CIDR cidr = 2;
+  bool inverse_match = 3;
+
+  // resource_hash instruct simplified config converter to load domain from geo file.
+  bytes resource_hash = 4;
+  string code = 5;
+
+  string file_path = 68000 [(v2ray.core.common.protoext.field_opt).convert_time_resource_loading = "resource_hash"];
+}
+
+message GeoIPList {
+  repeated GeoIP entry = 1;
+}
+
+message GeoSite {
+  string country_code = 1;
+  repeated Domain domain = 2;
+
+  // resource_hash instruct simplified config converter to load domain from geo file.
+  bytes resource_hash = 3;
+  string code = 4;
+
+  string file_path = 68000 [(v2ray.core.common.protoext.field_opt).convert_time_resource_loading = "resource_hash"];
+}
+
+message GeoSiteList {
+  repeated GeoSite entry = 1;
+}
+```
+
+
 
 ## 编译 .proto
 

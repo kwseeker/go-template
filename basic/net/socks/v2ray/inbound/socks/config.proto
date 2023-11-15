@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package basic.net.socks.v2ray.inbound.socks;
+option go_package = "kwseeker.top/kwseeker/go-template/basic/net/socks/v2ray/inbound/socks";
+
+import "kwseeker.top/kwseeker/go-template/basic/net/socks/v2ray/common/protocol/address.proto";
+import "kwseeker.top/kwseeker/go-template/basic/net/socks/v2ray/common/protocol/server_spec.proto";
+import "kwseeker.top/kwseeker/go-template/basic/net/socks/v2ray/common/protocol/packetaddr.proto";
+
+enum Version {
+  SOCKS5 = 0;
+  SOCKS4 = 1;
+  SOCKS4A = 2;
+}
+
+// AuthType is the authentication type of Socks proxy.
+enum AuthType {
+  // NO_AUTH is for anonymous authentication.
+  NO_AUTH = 0;
+  // PASSWORD is for username/password authentication.
+  PASSWORD = 1;
+}
+
+// Account represents a Socks account.
+message Account {
+  string username = 1;
+  string password = 2;
+}
+
+// ServerConfig is the protobuf config for Socks server.
+message ServerConfig {
+  //认证类型
+  AuthType auth_type = 1;
+  //用户名密码，用于校对请求中的用户名密码
+  map<string, string> accounts = 2;
+
+  basic.net.socks.v2ray.common.protocol.IPOrDomain address = 3;
+  bool udp_enabled = 4;
+  uint32 timeout = 5 [deprecated = true];
+  uint32 user_level = 6;
+
+  basic.net.socks.v2ray.common.protocol.PacketAddrType packet_encoding = 7;
+}
+
+// ClientConfig is the protobuf config for Socks client.
+message ClientConfig {
+  // Sever is a list of Socks server addresses.
+  repeated basic.net.socks.v2ray.common.protocol.ServerEndpoint server = 1;
+  Version version = 2;
+}

@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package basic.net.socks.v2ray.common.protocol;
+option go_package = "kwseeker.top/kwseeker/go-template/basic/net/socks/v2ray/common/protocol";
+
+enum PacketAddrType {
+  None = 0;
+  Packet = 1;
+}

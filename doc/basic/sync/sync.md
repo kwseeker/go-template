@@ -25,6 +25,8 @@ sync
 sync 包提供了常见的并发编程同步原语,  包括 Mutex（互斥锁）、RWMutex（读写锁）、WaitGroup（）、Once 和 Cond， 以及拓展原语 ErrGroup、Semaphore和 SingleFlight 。
 
 > 所谓**原语**，一般是指由若干条指令组成的程序段，用来实现某个特定功能，在执行过程中**不可被中断**。
+>
+> **Go 锁依旧是通过内存访问的方式进行并发同步的，与CSP是不同的并发同步方式。**
 
 ## 同步原语
 
@@ -58,9 +60,72 @@ func (m *Mutex) Lock() {
 }
 ```
 
+### RWMutex
+
+### WaitGroup
+
+等待一组并发操作完成。当不关心并发操作结果，或者有其他方法来收集它们的结果时使用。当这些条件不满足时应使用 channel 和 select 语句。
+
+> WaitGroup 名字很贴切，和 Java 中的 CountLatch 和 Semphore 功能类似。
+
+使用Channel 实现 WaitGroup 效果（但是可以通过 channel 传递结果）：
+
+```go
+done := make(chan bool)
+for i := 0; i < 10; i++ {
+    go func() {
+        //do something ...
+        done <- true
+    }()
+}
+for i := 0; i < 10; i++ {
+    <-done
+}
+```
+
+### Cond
+
+`sync.Cond` 基于互斥锁/读写锁，互斥锁 `sync.Mutex` 通常用来保护临界区和共享资源，条件变量 `sync.Cond` 用来协调想要访问共享资源的 goroutine。
+
+功能都体现到方法上了（即 Go 的等待唤醒机制）。
+
+```go
+type Cond struct {
+	noCopy noCopy
+
+	// L is held while observing or changing the condition
+	L Locker
+
+	notify  notifyList
+	checker copyChecker
+}
+
+func (c *Cond) Wait()
+func (c *Cond) Signal()
+func (c *Cond) Broadcast()
+```
+
+### Once
+
+确保某个函数无论在单个协程或者多个协程中都只会被调用一次。
 
 
-## 对象池
+
+## Channel & Select 
+
+
+
+## GOMAXPROCS 控制
+
+此函数位于 runtime 包。`runtime.GOMAXPROCS`的作用是设置当前进程使用的最大cpu数，返回值为上一次调用成功的设置值。
+
+Go1.5 之后默认使用CPU最大核心数，之前默认是使用一个核心。
+
+
+
+## 并发同步选择：sync锁 vs CSP (channel)
+
+参考《Go语言并发之道》图2-1。
 
 
 
