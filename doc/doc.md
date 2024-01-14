@@ -13,17 +13,29 @@
 
   一个 CLI 应用程序的库。
 
+  + **jsonpb**
+
 + **configuration**
 
   配置解析相关。
+
++ **file**
+  + **xdg**
+
++ **geo**
+  + **ip2location**
 
 + **log** 
 
   日志相关框架。
 
+  + **logrus**
+
 + **orm**
 
   数据库ORM框架。
+
+  + **gorm**
 
 + **protobuf**
 
